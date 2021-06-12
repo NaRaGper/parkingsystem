@@ -124,7 +124,7 @@ public class FareCalculatorServiceTest {
 		assertEquals( (24 * Fare.CAR_RATE_PER_HOUR) , ticket.getPrice());
 	}
 	
-	//Mes tests :
+	//My tests :
 	
 	@Test
 	public void calculateFareCarWithNullOutTime() {
@@ -139,5 +139,17 @@ public class FareCalculatorServiceTest {
 		assertThrows(NullPointerException.class, () -> fareCalculatorService.calculateFare(ticket));
 	}
 	
+	@Test
+	public void calculateFareUnkownParkingType() {
+		Date inTime = new Date();
+		inTime.setTime( System.currentTimeMillis() - (  60 * 60 * 1000) );
+		Date outTime = new Date();
+		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.TEST_ERROR,false);
+
+		ticket.setInTime(inTime);
+		ticket.setOutTime(outTime);
+		ticket.setParkingSpot(parkingSpot);
+		assertThrows(IllegalArgumentException.class, () -> fareCalculatorService.calculateFare(ticket));
+	}
 	
 } 
