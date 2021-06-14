@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
 
 @ExtendWith(MockitoExtension.class)
 public class ParkingDataBaseIT {
@@ -91,7 +92,31 @@ public class ParkingDataBaseIT {
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
         parkingService.processExitingVehicle();
         
-        //TODO: check that the fare generated and out time are populated correctly in the database
+        try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/prod?serverTimezone=Europe/Amsterdam&amp","root","rootroot");
+			Statement statement = connection.createStatement();
+			
+			//Searching for a vehicle regulation number given as "ABCDEF"
+			ResultSet ticket = statement.executeQuery("SELECT * FROM ticket WHERE vehicle_reg_number='ABCDEF'");
+			
+			//getting to the first entry corresponding
+			ticket.next();
+			
+			//Getting the fare from the database...
+			double getFareGenerated = ticket.getDouble(4);
+			//...and the outTime
+			Timestamp getOutTimeGenerated = ticket.getTimestamp(6);
+			
+			assertEquals(getFareGenerated, ticketDAO.getTicket("ABCDEF").getPrice());
+			assertEquals(getOutTimeGenerated, ticketDAO.getTicket("ABCDEF").getOutTime());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Database not found.");
+		}
+        
     }
 
 }
