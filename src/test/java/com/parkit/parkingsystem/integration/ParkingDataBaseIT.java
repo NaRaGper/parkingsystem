@@ -59,7 +59,6 @@ public class ParkingDataBaseIT {
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
         parkingService.processIncomingVehicle();
         
-        //TODO: check that a ticket is actually saved in DB and Parking table is updated with availability
         try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
@@ -78,7 +77,7 @@ public class ParkingDataBaseIT {
 			isParkingSpotAvailable = parking.getInt(2);
 			
 			assertEquals(true, isTicketCreated);
-			assertEquals(0, isParkingSpotAvailable); //It should not be available
+			assertEquals(0, isParkingSpotAvailable); //It should not be available, returning 0
 			
 		} catch (Exception e) {
 			e.printStackTrace();
