@@ -26,7 +26,7 @@ public class FareCalculatorService {
             		//We calculate the fare times the duration (in milliseconds) and convert the total back to hourly rates
             		ticketPrice = ((((duration * Fare.CAR_RATE_PER_HOUR) /1000) /60) /60);
             		
-            		//Then round it up to 2 decimal places
+            		//Then round it up to 2 decimal places to make it easier to read
             		ticketPriceRounded = Math.round(ticketPrice*100)/100.00;
             		
             		ticket.setPrice(ticketPriceRounded);
