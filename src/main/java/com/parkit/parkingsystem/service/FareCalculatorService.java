@@ -12,6 +12,9 @@ public class FareCalculatorService {
        
         long inTime = ticket.getInTime().getTime();
         long outTime = ticket.getOutTime().getTime();
+        
+        double ticketPrice;
+        double ticketPriceRounded;
 
         long duration = outTime - inTime; //The duration is in milliseconds 
         
@@ -20,7 +23,13 @@ public class FareCalculatorService {
             	if (duration <= 30 * (1000*60)) {
             		ticket.setPrice(0);
             	} else {
-            		ticket.setPrice((((duration * Fare.CAR_RATE_PER_HOUR) /1000) /60) /60); //We calculate the fare * duration (in milliseconds) and convert the total back to hourly rates
+            		//We calculate the fare times the duration (in milliseconds) and convert the total back to hourly rates
+            		ticketPrice = ((((duration * Fare.CAR_RATE_PER_HOUR) /1000) /60) /60);
+            		
+            		//Then round it up to 2 decimal places
+            		ticketPriceRounded = Math.round(ticketPrice*100)/100.00;
+            		
+            		ticket.setPrice(ticketPriceRounded);
             	}
                 break;
             }
@@ -28,7 +37,10 @@ public class FareCalculatorService {
             	if (duration <= 30 * (1000*60)) {
             		ticket.setPrice(0);
             	} else {
-            		ticket.setPrice((((duration * Fare.BIKE_RATE_PER_HOUR) /1000) /60) /60);
+            		ticketPrice = ((((duration * Fare.BIKE_RATE_PER_HOUR) /1000) /60) /60);
+            		ticketPriceRounded = Math.round(ticketPrice*100)/100.00;
+            		
+            		ticket.setPrice(ticketPriceRounded);
             	}
                 break;
             }
