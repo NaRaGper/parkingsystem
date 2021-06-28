@@ -48,6 +48,7 @@ public class TicketDAO {
             PreparedStatement ps = con.prepareStatement(DBConstants.GET_TICKET);
             //ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
             ps.setString(1,vehicleRegNumber);
+            ps.setString(2,vehicleRegNumber);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
                 ticket = new Ticket();

@@ -144,19 +144,6 @@ public class FareCalculatorServiceTest {
 	}
 	
 	@Test
-	public void calculateFareUnkownParkingType() {
-		Date inTime = new Date();
-		inTime.setTime( System.currentTimeMillis() - (  60 * 60 * 1000) );
-		Date outTime = new Date();
-		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.TEST_ERROR,false);
-
-		ticket.setInTime(inTime);
-		ticket.setOutTime(outTime);
-		ticket.setParkingSpot(parkingSpot);
-		assertThrows(IllegalArgumentException.class, () -> fareCalculatorService.calculateFare(ticket));
-	}
-	
-	@Test
 	public void calculateFareCarWithThirtyMinutesOrLessParkingTime(){
 		Date inTime = new Date();
 		inTime.setTime( System.currentTimeMillis() - (  20 * 60 * 1000) ); //20 minutes parking time should be free
@@ -183,4 +170,5 @@ public class FareCalculatorServiceTest {
 		fareCalculatorService.calculateFare(ticket);
 		assertEquals( (0) , ticket.getPrice());
 	}
+	
 } 

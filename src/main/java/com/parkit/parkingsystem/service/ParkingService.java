@@ -48,6 +48,10 @@ public class ParkingService {
                 System.out.println("Generated Ticket and saved in DB");
                 System.out.println("Please park your vehicle in spot number:"+parkingSpot.getId());
                 System.out.println("Recorded in-time for vehicle number:"+vehicleRegNumber+" is:"+inTime);
+                
+                if (FareCalculatorService.hasBeenThere(ticket) == true) {
+                	System.out.println("Welcome back! You have a 5% discount on your parking fare!");
+                }
             }
         }catch(Exception e){
             logger.error("Unable to process incoming vehicle",e);
