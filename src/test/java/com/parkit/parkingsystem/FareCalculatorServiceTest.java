@@ -136,10 +136,10 @@ public class FareCalculatorServiceTest {
 		inTime.setTime( System.currentTimeMillis() - (  24 * 60 * 60 * 1000) );
 		Date outTime = null;
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
-
 		ticket.setInTime(inTime);
 		ticket.setOutTime(outTime);
 		ticket.setParkingSpot(parkingSpot);
+		
 		assertThrows(NullPointerException.class, () -> fareCalculatorService.calculateFare(ticket));
 	}
 	
@@ -149,11 +149,12 @@ public class FareCalculatorServiceTest {
 		inTime.setTime( System.currentTimeMillis() - (  20 * 60 * 1000) ); //20 minutes parking time should be free
 		Date outTime = new Date();
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
-
 		ticket.setInTime(inTime);
 		ticket.setOutTime(outTime);
 		ticket.setParkingSpot(parkingSpot);
+		
 		fareCalculatorService.calculateFare(ticket);
+		
 		assertEquals( (0) , ticket.getPrice());
 	}
 	
@@ -163,11 +164,12 @@ public class FareCalculatorServiceTest {
 		inTime.setTime( System.currentTimeMillis() - (  20 * 60 * 1000) ); //20 minutes parking time should be free
 		Date outTime = new Date();
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.BIKE,false);
-
 		ticket.setInTime(inTime);
 		ticket.setOutTime(outTime);
 		ticket.setParkingSpot(parkingSpot);
+		
 		fareCalculatorService.calculateFare(ticket);
+		
 		assertEquals( (0) , ticket.getPrice());
 	}
 	
